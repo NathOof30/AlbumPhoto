@@ -25,7 +25,7 @@ class Main extends Controller
         return view('index');
     }
 
-    public function albums() {
+    public function LesAlbums() {
         
 
 
@@ -41,7 +41,7 @@ class Main extends Controller
         return view('albums');
     }
 
-    public function album($id) {
+    public function detailAlbum($id) {
         
 
 
@@ -57,7 +57,7 @@ class Main extends Controller
         return view('album');
     }
 
-    public function photos() {
+    public function LesPhotos() {
         
 
 
@@ -89,7 +89,7 @@ class Main extends Controller
         return view('tags', ['tags' => $tags]);
     }
 
-    public function tag($id) {
+    public function detailTag($id) {
         
 
 
