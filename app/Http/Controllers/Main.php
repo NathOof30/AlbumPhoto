@@ -9,9 +9,116 @@ use function Laravel\Prompts\alert;
 class Main extends Controller
 {
 
-    public function welcome() {
-        return view('welcome');
+    public function index() {
+
+
+
+
+
+
+
+
+
+
+
+
+        return view('index');
     }
 
+    public function albums() {
+        
+
+
+
+
+
+
+
+
+
+
+
+        return view('albums');
+    }
+
+    public function album($id) {
+        
+
+
+
+
+
+
+
+
+
+
+
+        return view('album');
+    }
+
+    public function photos() {
+        
+
+
+
+
+
+
+
+
+
+
+
+        return view('photos');
+    }
+
+    public function tags() {
+        
+
+
+
+
+
+
+
+
+
+
+
+        return view('tags');
+    }
+
+    public function tag($id) {
+        
+
+
+
+
+
+
+
+
+
+
+
+        return view('tag');
+    }
+
+    public function ajoutPhoto() {
+        
+
+
+
+
+
+
+
+
+
+
+
+        return view('ajoutPhoto');
+    }
 }
 ?>
