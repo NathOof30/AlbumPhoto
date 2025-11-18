@@ -9,7 +9,7 @@
     </head>
     
     <body>
-        <header>Super Film</header>
+        <header>Album Photo</header>
         <nav>
             <a href="/">Accueil</a>
             <a href="/albums">Albums</a>
