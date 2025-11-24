@@ -1,4 +1,4 @@
-@extends("template")
-@section('contenu')
-    <h1>Ajout d'une photo</h1>
+@extends('template')
+
+@section('content')
 @endsection

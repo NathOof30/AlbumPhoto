@@ -16,11 +16,12 @@
             <a href="/photos">Photos</a>
             <a href="/tags">Tags</a>
             <a href="/ajoutPhoto">Ajout Photo</a>
+            <a href="/tag">Tag</a>
         </nav>
         
         
         <main>
-            @yield("contenu")
+            @yield("content")
         </main>
     </body>
 </html>

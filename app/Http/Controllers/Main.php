@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\alert;
@@ -25,8 +26,8 @@ class Main extends Controller
         return view('index');
     }
 
-    public function albums() {
-        
+    public function LesAlbums() {
+        $lesAlbums = DB::SELECT("SELECT * FROM albums ORDER BY id");
 
 
 
@@ -36,13 +37,11 @@ class Main extends Controller
 
 
 
-
-
-        return view('albums');
+        return view('albums', ['lesAlbums' => $lesAlbums]);
     }
 
-    public function album($id) {
-        
+    public function detailAlbum($id) {
+        $album = DB::select("SELECT * FROM photos WHERE album_id = ?", [$id]);
 
 
 
@@ -52,13 +51,12 @@ class Main extends Controller
 
 
 
-
-
-        return view('album');
+        return view('album', ['album' => $album]);
     }
 
-    public function photos() {
-        
+    public function LesPhotos() {
+        $photos = DB::SELECT("SELECT * FROM photos ORDER BY id");
+        $albums = DB::SELECT("SELECT * FROM albums");
 
 
 
@@ -68,13 +66,11 @@ class Main extends Controller
 
 
 
-
-
-        return view('photos');
+        return view('photos', ['photos' => $photos, 'albums' => $albums]);
     }
 
-    public function tags() {
-        
+    public function lesTags() {
+        $tags = DB::SELECT("SELECT * FROM tags ORDER BY id");
 
 
 
@@ -86,24 +82,17 @@ class Main extends Controller
 
 
 
-        return view('tags');
+        return view('tags', ['tags' => $tags]);
     }
 
-    public function tag($id) {
-        
+    
+    public function detailTag($id) {
+        $tag = Tag::with('photos')->find($id);
 
-
-
-
-
-
-
-
-
-
-
-        return view('tag');
+        return view('tag', ['tag' => $tag]);
     }
+
+
 
     public function ajoutPhoto() {
         
@@ -120,5 +109,5 @@ class Main extends Controller
 
         return view('ajoutPhoto');
     }
-}
+}  
 ?>
