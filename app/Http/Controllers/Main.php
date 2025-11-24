@@ -90,7 +90,11 @@ class Main extends Controller
     }
 
     public function detailTag($id) {
-        
+        $tag = DB::select("SELECT tags.id, tags.nom, photos.id AS photo_id, photos.titre
+                            FROM tags
+                            LEFT JOIN possede_tag ON tags.id = possede_tag.tag_id
+                            LEFT JOIN photos ON possede_tag.photo_id = photos.id
+                            WHERE tags.id = 1");
 
 
 
@@ -99,10 +103,7 @@ class Main extends Controller
 
 
 
-
-
-
-        return view('tag');
+        return view('tag', ['tag' => $tag]);
     }
 
     public function ajoutPhoto() {
