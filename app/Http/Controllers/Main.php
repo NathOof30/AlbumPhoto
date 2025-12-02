@@ -84,22 +84,8 @@ class Main extends Controller
         ]);
     }
 
-<<<<<<< HEAD
     public function lesPhotos() {
         $photos = Photo::all();
-=======
-    public function LesPhotos(Request $request)
-    {
-        // Début
-        $query = Photo::query();
-        
-        // selection par tags
-        if ($request->filled('tag_id')) {
-            $query->whereHas('tags', function ($q) use ($request) {
-                $q->where('tags.id', $request->input('tag_id'));
-            });
-        }
->>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
 
         // selection par notes
         if ($request->filled('note')) {
@@ -115,19 +101,7 @@ class Main extends Controller
         // fin 
         $photos = $query->get();
 
-<<<<<<< HEAD
         return view('photos', ['photos' => $photos]);
-=======
-        // pour afficher dans le form
-        $tags = Tag::orderBy('nom')->get();
-        $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
-
-        return view('photos', [
-            'photos' => $photos,
-            'tags' => $tags,
-            'notes' => $notes,
-        ]);
->>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
     }
 
     public function lesTags()
@@ -173,7 +147,6 @@ class Main extends Controller
 
         return view('ajoutPhoto');
     }
-<<<<<<< HEAD
     public function traitementFormulaire(Request $request) {
     // --- 1. Validation des données ---
     $request->validate([
@@ -181,56 +154,13 @@ class Main extends Controller
         'url'      => 'required|url', // On garde la validation pour 'url'
         'note'     => 'required|integer|min:1|max:5',
         'album_id' => 'required|integer|exists:albums,id',
-        'image'    => 'required|image|max:2048', // Validation pour le fichier uploadé
     ]);
-=======
-    public function traitementFormulaire(Request $request)
-    {
-        $request->validate([
-            'titre' => 'required|string|max:255',
-            'url' => 'required|url',
-            'note' => 'required|integer|min:1|max:5',
-            'album_id' => 'required|integer|exists:albums,id',
-        ]);
->>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
-
-    // --- 2. Traitement du fichier image ---
-    
-    $imageFile = $request->file('image');
-
-    // a. Définition du chemin de destination
-    // public_path('photos') pointe vers C:\laravel\AlbumPhoto\public\photos
-    $destinationPath = public_path('photos');
-    
-    // b. Génération d'un nom de fichier unique pour éviter les conflits
-    $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
-    
-    // c. Déplacement du fichier uploadé vers le dossier public/photos
-    // C'est l'équivalent de l'action 'store' mais en direct dans le dossier public.
-    $imageFile->move($destinationPath, $imageFileName);
-
-    // d. Définition du chemin d'accès à enregistrer dans la BDD (relatif au dossier public)
-    // Utiliser '/photos/' pour accéder directement au dossier public/photos
-    $imagePath = '/photos/' . $imageFileName; 
-    
-    // --- 3. Insertion dans la base de données (MySQL) ---
-    
-    DB::table('photos')->insert([
-        'titre'    => $request->input('titre'),
-        'url'      => $imagePath, 
-        'note'     => $request->input('note'),
-        'album_id' => $request->input('album_id'),
-    ]);
-
-    return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
+    // on vajuste garder l'url pour l'instant car ça fais trop bugger mon code les images
+        return view('photos');
     }
-<<<<<<< HEAD
-
     public function monCompte()
     {
         return view('compte');
     }
-=======
->>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
 }
 ?>
