@@ -5,7 +5,8 @@
 
     <div class="filtres">
         <form method="GET" action="/photos">
-            <label for="tags">Filtrer par tags :</label>
+            <input type="search" name="search" placeholder="Recherche titre..." value="{{ request('search') }}">
+
             <select name="tag_id" id="tags">
                 <option value="">Sélectionnez un tag</option>
                 @foreach ($tags as $t)
@@ -13,7 +14,6 @@
                 @endforeach
             </select>
 
-            <label for="notes">Filtrer par notes :</label>
             <select name="note" id="notes">
                 <option value="">Sélectionnez une note</option>
                 @foreach ($notes as $n)
