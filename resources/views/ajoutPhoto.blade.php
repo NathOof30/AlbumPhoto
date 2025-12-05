@@ -1,5 +1,5 @@
 @extends('template')
-//photos(id,titre, url, note, album_id)
+
 @section('content')
 <form method="POST" action="/traitementFormulaire" enctype="multipart/form-data">
     @csrf

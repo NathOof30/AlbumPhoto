@@ -182,5 +182,12 @@ class Main extends Controller
         
         return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
     }
+    public function create_Personne(){
+        return view("createPersonne");
+    }
+    public function create_Album(){
+        return view("createAlbum");
+    }
+    public function store_album(){}
 }
 ?>

@@ -5,17 +5,25 @@
     margin: 0;
     padding: 0;
 }
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
 :root {
-    --wht-color: aliceblue;
+    --wht-color: #fefefe;      /* Arrière-plan des éléments clairs (cartes, header) */
+    --text-color : #362336;   /* Texte sombre (sur fond blanc) */
+    --bg-color: #1a111a;      /* Arrière-plan général sombre (body) */
 }
 
 body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #b8ccd7;
+    background-color: var(--bg-color);
     font-family: "source sans 3", sans-serif;
+    color: var(--text-color);
 }
 
 h1, h2, h3{
@@ -38,7 +46,7 @@ h1, h2, h3{
 }
 .header a{
     text-decoration: none;
-    color: black;
+    color: var(--text-color);
 }
 header{
     margin-left: 30px;
@@ -57,6 +65,10 @@ nav{
 
 .item{
     background-color: var(--wht-color);
+    border-radius: 10px;
+    padding-bottom: 5px;
+    min-height: 350px;
+    max-height: 350px;
 }
 
 .galery{
@@ -74,4 +86,41 @@ nav{
 
 .content{
     margin-top: 4rem;
+}
+
+.filtres input[type="search"],
+.filtres select {
+    /* Styles des champs de saisie et de sélection */
+    padding: 10px;
+    border: 2px solid var(--text-color);
+    background-color: var(--wht-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.filtres button[type="submit"],
+.filtres a {
+    /* Styles des boutons et liens d'action */
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.tag-list {
+    list-style-type: none;
+    text-decoration: none;
+    padding: 0;
+    color: var(--text-color)
+}
+.tag-list li {
+    display: inline;
+    margin-right: 10px;
+}
+.tag-list li a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 5px 10px;
+    border: 1px solid var(--text-color);
+    border-radius: 5px;
 }
