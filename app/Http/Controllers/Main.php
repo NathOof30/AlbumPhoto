@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Album;
 use App\Models\Photo;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\alert;
+use Illuminate\Support\Facades\Auth;
 
 class Main extends Controller
 {
@@ -88,7 +89,7 @@ class Main extends Controller
     {
         // Début
         $query = Photo::query();
-        
+
         // selection par tags
         if ($request->filled('tag_id')) {
             $query->whereHas('tags', function ($q) use ($request) {
@@ -181,6 +182,27 @@ class Main extends Controller
         ]);
 
         return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
+    }
+
+
+    public function creerAlbum()
+    {
+        return view('creerAlbum');
+    }
+
+    public function storeAlbum(Request $request)
+    {
+        $request->validate([
+            'titre' => 'required|string|max:255',
+        ]);
+
+        Album::create([
+            'titre' => $request->input('titre'),
+            'creation' => date('Y-m-d'),
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect('/albums')->with('success', 'Album créé avec succès !');
     }
 }
 ?>
