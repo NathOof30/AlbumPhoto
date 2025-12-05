@@ -29,7 +29,7 @@ class Main extends Controller
         return view('index');
     }
 
-    public function LesAlbums()
+    public function lesAlbums()
     {
         $lesAlbums = Album::all();
 
@@ -84,8 +84,17 @@ class Main extends Controller
         ]);
     }
 
-    public function lesPhotos() {
-        $photos = Photo::all();
+    public function lesPhotos(Request $request)
+    {
+        // Début
+        $query = Photo::query();
+        
+        // selection par tags
+        if ($request->filled('tag_id')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('tags.id', $request->input('tag_id'));
+            });
+        }
 
         // selection par notes
         if ($request->filled('note')) {
@@ -101,7 +110,15 @@ class Main extends Controller
         // fin 
         $photos = $query->get();
 
-        return view('photos', ['photos' => $photos]);
+        // pour afficher dans le form
+        $tags = Tag::orderBy('nom')->get();
+        $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
+
+        return view('photos', [
+            'photos' => $photos,
+            'tags' => $tags,
+            'notes' => $notes,
+        ]);
     }
 
     public function lesTags()
@@ -147,20 +164,23 @@ class Main extends Controller
 
         return view('ajoutPhoto');
     }
-    public function traitementFormulaire(Request $request) {
-    // --- 1. Validation des données ---
-    $request->validate([
-        'titre'    => 'required|string|max:255',
-        'url'      => 'required|url', // On garde la validation pour 'url'
-        'note'     => 'required|integer|min:1|max:5',
-        'album_id' => 'required|integer|exists:albums,id',
-    ]);
-    // on vajuste garder l'url pour l'instant car ça fais trop bugger mon code les images
-        return view('photos');
-    }
-    public function monCompte()
+    public function traitementFormulaire(Request $request)
     {
-        return view('compte');
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'url' => 'required|url',
+            'note' => 'required|integer|min:1|max:5',
+            'album_id' => 'required|integer|exists:albums,id',
+        ]);
+
+        DB::table('photos')->insert([
+            'titre' => $request->input('titre'),
+            'url' => $request->input('url'),
+            'note' => $request->input('note'),
+            'album_id' => $request->input('album_id'),
+        ]);
+        
+        return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
     }
 }
 ?>
