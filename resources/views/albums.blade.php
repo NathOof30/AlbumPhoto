@@ -1,10 +1,19 @@
 @extends('template')
 
 @section('content')
-    <h1>Liste des Albums</h1>
-    <ul>
+    <h1 class="text-center">Liste des Albums</h1>
+    <ul class="albums-list">
         @foreach ($lesAlbums as $album)
-            <li><a href="/album/{{ $album->id }}">{{ $album->titre }} (date de création : {{ $album->creation }}) Propriété : {{ $album->user->name ?? 'Inconnu' }}</a></li>
+            <li class="album-item">
+                <a href="/album/{{ $album->id }}">
+                    <h3>{{ $album->titre }}</h3>
+                    <div class="album-meta">
+                        <span>Créé le : {{ $album->creation }}</span>
+                        <span>•</span>
+                        <span>Propriétaire : {{ $album->user->name ?? 'Inconnu' }}</span>
+                    </div>
+                </a>
+            </li>
         @endforeach
     </ul>
 @endsection

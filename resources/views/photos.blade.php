@@ -1,11 +1,11 @@
 @extends('template')
 
 @section('content')
-    <h1>Galerie de Photos</h1>
+    <h1 class="text-center">Galerie de Photos</h1>
 
     <div class="filtres">
         <form method="GET" action="/photos">
-            <input type="search" name="search" placeholder="Recherche titre..." value="{{ request('search') }}">
+            <input type="search" name="search" placeholder="Rechercher un titre..." value="{{ request('search') }}">
 
             <select name="tag_id" id="tags">
                 <option value="">Sélectionnez un tag</option>
@@ -21,18 +21,26 @@
                 @endforeach
             </select>
 
-            <button type="submit">Filtrer</button>
-            <a href="/photos" style="margin-left:8px;">Réinitialiser</a>
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+            <a href="/photos" class="btn">Réinitialiser</a>
         </form>
     </div>
 
     <div class="galery">
         @foreach ($photos as $photo)
             <div class="item">
-                <h3>{{ $photo->titre}} | note : {{ $photo->note }}</h3>
-                <p>Album : {{ $photo->album_id}}</p>
-                <a href="album/{{ $photo->album_id }}"><img src="{{ $photo->url }}" alt="{{ $photo->titre }}"></a>
+                <a href="/album/{{ $photo->album_id }}">
+                    <img src="{{ $photo->url }}" alt="{{ $photo->titre }}">
+                    <h3>{{ $photo->titre }}</h3>
+                    <p>Album ID : {{ $photo->album_id }} • Note : {{ $photo->note }}</p>
+                </a>
             </div>
         @endforeach
     </div>
+    
+    @if($photos->isEmpty())
+        <div class="empty-state">
+            <p>Aucune photo trouvée.</p>
+        </div>
+    @endif
 @endsection
