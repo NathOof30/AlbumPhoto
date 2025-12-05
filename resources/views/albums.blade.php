@@ -4,7 +4,7 @@
     <h1>Liste des Albums</h1>
     <ul>
         @foreach ($lesAlbums as $album)
-            <li><a href="/album/{{ $album->id }}">{{ $album->titre }} (date de création : {{ $album->creation }})</a></li>
+            <li><a href="/album/{{ $album->id }}">{{ $album->titre }} (date de création : {{ $album->creation }}) Propriété : {{ $album->user->name ?? 'Inconnu' }}</a></li>
         @endforeach
     </ul>
 @endsection
