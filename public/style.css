@@ -75,11 +75,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --wht-color: #fefefe;      /* Arrière-plan des éléments clairs (cartes, header) */
-    --text-color : #362336;   /* Texte sombre (sur fond blanc) */
-    --bg-color: #1a111a;      /* Arrière-plan général sombre (body) */
-}
 
 body{
     display: flex;
