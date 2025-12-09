@@ -16,7 +16,6 @@
             <a href="/">Accueil</a>
             <a href="/albums">Albums</a>
             <a href="/photos">Photos</a>
-            <a href="/tags">Tags</a>
 
             @auth
                 <a href="/creerAlbum">Créer Album</a>
