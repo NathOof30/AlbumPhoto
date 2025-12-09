@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-    <h1>Galerie de Photos</h1>
+    <h1 class="text-center">Galerie de Photos</h1>
 
     <div id="zoomOverlay" class="overlay">
         <span class="close-btn">X</span>
@@ -11,7 +11,7 @@
 
     <div class="filtres">
         <form method="GET" action="/photos">
-            <input type="search" name="search" placeholder="Recherche titre..." value="{{ request('search') }}">
+            <input type="search" name="search" placeholder="Rechercher un titre..." value="{{ request('search') }}">
 
             <select name="tag_id" id="tags">
                 <option value="">Sélectionnez un tag</option>
@@ -27,8 +27,8 @@
                 @endforeach
             </select>
 
-            <button type="submit">Filtrer</button>
-            <a href="/photos" style="margin-left:8px;">Réinitialiser</a>
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+            <a href="/photos" class="btn">Réinitialiser</a>
         </form>
     </div>
 
@@ -48,5 +48,10 @@
             </div>
         @endforeach
     </div>
+    @if($photos->isEmpty())
+        <div class="empty-state">
+            <p>Aucune photo trouvée.</p>
+        </div>
+    @endif
     <script src="{{ asset('zoom-photo.js') }}" defer></script>
 @endsection

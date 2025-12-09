@@ -1,18 +1,22 @@
 @extends('template')
 
 @section('content')
-    <h2>Photos liées au tag : {{ $tag->nom }}</h2>
+    <div class="tag-header">
+        <h2>Photos liées au tag : <span style="color: var(--color-primary);">{{ $tag->nom }}</span></h2>
+    </div>
 
     @if ($tag && $tag->photos->count() > 0)
-        <ul>
+        <ul class="tag-photos">
             @foreach ($tag->photos as $photo)
                 <li>
-                    <img src="{{ $photo->url }}" alt="{{ $photo->titre }}" style="max-width:200px;">
+                    <img src="{{ $photo->url }}" alt="{{ $photo->titre }}">
                     <p>{{ $photo->titre }}</p>
                 </li>
             @endforeach
         </ul>
     @else
-        <p>Aucune photo liée à ce tag.</p>
+        <div class="empty-state">
+            <p>Aucune photo liée à ce tag.</p>
+        </div>
     @endif
 @endsection
