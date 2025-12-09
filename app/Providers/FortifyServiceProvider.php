@@ -46,13 +46,11 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
 
-        Fortify::registerView(function () {
-            return view('auth.register'); // Assurez-vous que votre vue est bien dans resources/views/auth/register.blade.php
-        });
-
-        // Pour la page de connexion (vous aurez la même erreur sinon)
         Fortify::loginView(function () {
-            return view('auth.login'); // Assurez-vous que votre vue est bien dans resources/views/auth/login.blade.php
+            return view('auth.login');
+        });
+        Fortify::registerView(function () {
+            return view('auth.register');
         });
     }
 }

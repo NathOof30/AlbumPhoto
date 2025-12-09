@@ -16,8 +16,6 @@ class Main extends Controller
 
     public function index()
     {
-        // on va ajouter après des fonctionnalités
-
 
 
 
@@ -50,44 +48,29 @@ class Main extends Controller
         
 
 
-        //affiche les albums
+
         return view('albums', ['lesAlbums' => $lesAlbums]);
     }
 
     public function detailAlbum($id, Request $request)
     {
         $album = Album::findOrFail($id);
-
-        // Début (Filtres)
         $query = Photo::where('album_id', $id);
-
-        // selection par tags
         if ($request->filled('tag_id')) {
             $query->whereHas('tags', function ($q) use ($request) {
                 $q->where('tags.id', $request->input('tag_id'));
             });
         }
-
-        // selection par notes
         if ($request->filled('note')) {
             $query->where('note', $request->input('note'));
         }
-
-        // selection par recherche
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where('titre', 'LIKE', "%{$search}%");
         }
-
-        // fin (Filtres)
         $photos = $query->get();
-
-        // pour afficher dans le form des Filtres
         $tags = Tag::orderBy('nom')->get();
         $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
-
-
-        //afficher les photos d'un Album + Filtres
         return view('album', [
             'album' => $album,
             'photos' => $photos,
@@ -98,35 +81,22 @@ class Main extends Controller
 
     public function lesPhotos(Request $request)
     {
-        // Début (Filtres)
         $query = Photo::query();
-
-        // selection par tags
         if ($request->filled('tag_id')) {
             $query->whereHas('tags', function ($q) use ($request) {
                 $q->where('tags.id', $request->input('tag_id'));
             });
         }
-
-        // selection par notes
         if ($request->filled('note')) {
             $query->where('note', $request->input('note'));
         }
-
-        // selection par recherche
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where('titre', 'LIKE', "%{$search}%");
         }
-
-        // fin (Filtres)
         $photos = $query->get();
-
-        // pour afficher dans le form des Filtres
         $tags = Tag::orderBy('nom')->get();
         $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
-
-        //afficher les photos + form filtres
         return view('photos', [
             'photos' => $photos,
             'tags' => $tags,
@@ -137,7 +107,15 @@ class Main extends Controller
     public function lesTags()
     {
         $tags = DB::SELECT("SELECT * FROM tags ORDER BY id");
-        // on va suppr
+
+
+
+
+
+
+
+
+
         return view('tags', ['tags' => $tags]);
     }
 
@@ -145,17 +123,14 @@ class Main extends Controller
     public function detailTag($id)
     {
         $tag = Tag::with('photos')->find($id);
-        // on va suppr
         return view('tag', ['tag' => $tag]);
     }
 
 
     public function ajoutPhoto()
     {
-        //vient chercher les tags et albums
         $albums = Album::orderBy('titre')->get();
         $tags = Tag::orderBy('nom')->get();
-        //return les tags et albums dans le form
         return view('ajoutPhoto', [
             'albums' => $albums,
             'tags' => $tags,
@@ -174,16 +149,11 @@ class Main extends Controller
             'tag_id' => 'nullable|integer|exists:tags,id',
             'new_tag' => 'nullable|string|max:50',
         ]);
-
-        // Stock l'image dans le public
         $path = $request->file('photo')->store('photos', 'public');
         $url = Storage::url($path);
-
-        // eeee
         $selectedTagId = null;
 
         if ($request->filled('new_tag')) {
-            // Normaliser : enlever accents, mettre en minuscules, supprimer tout ce qui n'est pas a-z0-9
             $raw = $request->input('new_tag');
             $normalized = Str::lower(Str::ascii($raw));
             $normalized = preg_replace('/[^a-z0-9]/', '', $normalized);
@@ -191,15 +161,11 @@ class Main extends Controller
             if ($normalized === '') {
                 return back()->withErrors(['new_tag' => 'Tag invalide après normalisation. Utilisez des lettres et chiffres uniquement.'])->withInput();
             }
-
-            // Créer ou récupérer le tag (colonne nom)
             $tag = Tag::firstOrCreate(['nom' => $normalized]);
             $selectedTagId = $tag->id;
         } elseif ($request->filled('tag_id')) {
             $selectedTagId = $request->input('tag_id');
         }
-
-        // Insérer la photo et récupérer l'id (Query Builder pour rester cohérent)
         $photoId = DB::table('photos')->insertGetId([
             'titre' => $request->input('titre'),
             'url' => $url,
@@ -207,24 +173,13 @@ class Main extends Controller
             'album_id' => $request->input('album_id'),
             'user_id' => Auth::id(),
         ]);
-
-        // Lier le tag sélectionné / créé (si présent)
-        if ($selectedTagId) {
-            DB::table('possede_tag')->insert([
-                'photo_id' => $photoId,
-                'tag_id' => $selectedTagId,
-            ]);
-        }
-
+        
         return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
     }
-
-
-    public function creerAlbum()
+     public function creerAlbum()
     {
         return view('creerAlbum');
     }
-
     public function storeAlbum(Request $request)
     {
         $request->validate([
@@ -239,8 +194,6 @@ class Main extends Controller
 
         return redirect('/albums')->with('success', 'Album créé avec succès !');
     }
-
-
     public function deletePhoto($id)
     {
         $photo = Photo::findOrFail($id);
