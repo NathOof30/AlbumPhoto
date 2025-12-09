@@ -135,16 +135,6 @@ class Main extends Controller
     public function lesTags()
     {
         $tags = DB::SELECT("SELECT * FROM tags ORDER BY id");
-
-
-
-
-
-
-
-
-
-
         // on va suppr
         return view('tags', ['tags' => $tags]);
     }
@@ -259,6 +249,15 @@ class Main extends Controller
         }
 
         return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à supprimer cette photo.');
+    }
+
+    public function afficherCompte()
+    {
+        $user = Auth::user();
+        $userAlbums = Album::where('user_id', $user->id)->get();
+        $userPhotos = Photo::where('user_id', $user->id)->get();
+
+        return view('compte', ['user' => $user, 'albums' => $userAlbums, 'photos' => $userPhotos]);
     }
 }
 ?>
