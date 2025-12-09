@@ -29,6 +29,8 @@ class Main extends Controller
 
     public function lesAlbums(Request $request)
     {
+        $lesAlbums = Album::with('photos')->get();
+        
         $query = Album::query();
         // tri par date
         if ($request->filled('date')) {
