@@ -27,6 +27,8 @@ class Main extends Controller
 
     public function lesAlbums(Request $request)
     {
+        $lesAlbums = Album::with('photos')->get();
+        
         $query = Album::query();
         // tri par date
         if ($request->filled('date')) {
@@ -202,6 +204,15 @@ class Main extends Controller
         }
 
         return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à supprimer cette photo.');
+    }
+
+    public function afficherCompte()
+    {
+        $user = Auth::user();
+        $userAlbums = Album::where('user_id', $user->id)->get();
+        $userPhotos = Photo::where('user_id', $user->id)->get();
+
+        return view('compte', ['user' => $user, 'albums' => $userAlbums, 'photos' => $userPhotos]);
     }
 }
 ?>

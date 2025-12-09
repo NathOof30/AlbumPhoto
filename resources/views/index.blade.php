@@ -9,7 +9,6 @@
         <div class="actions">
             <a class="btn" href="/albums">Voir les albums</a>
             <a class="btn" href="/photos">Voir toutes les photos</a>
-            <a class="btn" href="/tags">Parcourir les tags</a>
         </div>
 
         @auth
