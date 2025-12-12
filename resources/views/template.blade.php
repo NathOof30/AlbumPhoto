@@ -7,11 +7,12 @@
     <title>Album Photo</title>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
     <div class="header">
-        <header>Album Photo</header>
+        <header><a href="/">Album Photo</a></header>
         <nav id="main-nav">
             <a href="/">Accueil</a>
             <a href="/albums">Albums</a>
@@ -37,6 +38,10 @@
                 <a href="{{ route('login') }}">Connexion</a>
                 <a href="{{ route('register') }}">Inscription</a>
             @endguest
+
+            @auth
+                <a href="/compte"><i class='bx bx-user'></i></a>
+            @endauth
         </nav>
     </div>
 
