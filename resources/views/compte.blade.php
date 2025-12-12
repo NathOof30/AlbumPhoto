@@ -28,7 +28,7 @@
                     <a href="/album/{{ $photo->album_id }}">
                         <h3>{{ $photo->titre }}</h3>
                         <div class="photo-meta">
-                            <span>Note : {{ $photo->note }}</span>
+                            <span>Note moyenne : {{ number_format($photo->noteMoyenne(), 1) }}/5 ({{ $photo->notes->count() }} avis)</span>
                         </div>
                     </a>
                 </li>

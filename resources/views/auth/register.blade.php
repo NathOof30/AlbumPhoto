@@ -8,22 +8,26 @@
             
             <div class="form-group">
                 <label for="name">Nom :</label>
-                <input type="text" id="name" name="name" required placeholder="Votre nom">
+                <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="Votre nom">
+                @error('name') <span style="color:red; font-size:0.9rem;">{{ $message }}</span> @enderror
             </div>
             
             <div class="form-group">
                 <label for="email">Email :</label>
-                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="votre@email.com">
+                @error('email') <span style="color:red; font-size:0.9rem;">{{ $message }}</span> @enderror
             </div>
             
             <div class="form-group">
-                <label for="password">Mot de passe :</label>
+                <label for="password">Mot de passe (min 8 caractères) :</label>
                 <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+                @error('password') <span style="color:red; font-size:0.9rem;">{{ $message }}</span> @enderror
             </div>
             
             <div class="form-group">
                 <label for="password_confirmation">Confirmer le mot de passe :</label>
                 <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirmez votre mot de passe">
+                @error('password_confirmation') <span style="color:red; font-size:0.9rem;">{{ $message }}</span> @enderror
             </div>
 
             <div class="form-actions">

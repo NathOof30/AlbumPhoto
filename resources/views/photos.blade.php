@@ -32,7 +32,11 @@
                 <a href="/album/{{ $photo->album_id }}">
                     <img src="{{ $photo->url }}" alt="{{ $photo->titre }}">
                     <h3>{{ $photo->titre }}</h3>
-                    <p>Album ID : {{ $photo->album_id }} • Note : {{ $photo->note }}</p>
+                    <p>
+                        Album ID : {{ $photo->album_id }} • 
+                        Note moyenne : {{ number_format($photo->noteMoyenne(), 1) }}/5
+                        ({{ $photo->notes->count() }} avis)
+                    </p>
                 </a>
             </div>
         @endforeach

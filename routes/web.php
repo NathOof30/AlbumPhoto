@@ -28,3 +28,4 @@ Route::post('/storeAlbum', [Main::class, 'storeAlbum'])->middleware('auth');
 
 Route::post('/deletePhoto/{id}', [Main::class, 'deletePhoto'])->where("id", "[0-9]+")->middleware('auth');
 Route::get('/compte', [Main::class, 'afficherCompte'])->middleware('auth');
+Route::post('/noterPhoto/{id}', [Main::class, 'noterPhoto'])->where("id", "[0-9]+")->middleware('auth');

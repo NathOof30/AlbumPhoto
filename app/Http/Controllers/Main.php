@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Models\Album;
 use App\Models\Photo;
+use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -255,9 +256,37 @@ class Main extends Controller
     {
         $user = Auth::user();
         $userAlbums = Album::where('user_id', $user->id)->get();
-        $userPhotos = Photo::where('user_id', $user->id)->get();
+        $userPhotos = Photo::where('user_id', $user->id)->with('notes')->get(); // AJOUTÉ with('notes')
 
         return view('compte', ['user' => $user, 'albums' => $userAlbums, 'photos' => $userPhotos]);
+    }
+
+    public function noterPhoto($id, Request $request)
+    {
+        $request->validate([
+            'note' => 'required|integer|min:1|max:5',
+        ]);
+
+        $user = Auth::user();
+
+        // Vérifier si l'utilisateur a déjà noté cette photo
+        $existingNote = Note::where('photo_id', $id)
+                            ->where('user_id', $user->id)
+                            ->first();
+
+        if ($existingNote) {
+            // Mettre à jour la note existante
+            $existingNote->update(['note' => $request->input('note')]);
+            return back()->with('success', 'Votre note a été mise à jour.');
+        } else {
+            // Créer une nouvelle note
+            Note::create([
+                'photo_id' => $id,
+                'user_id' => $user->id,
+                'note' => $request->input('note'),
+            ]);
+            return back()->with('success', 'Merci pour votre note !');
+        }
     }
 }
 ?>

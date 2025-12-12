@@ -13,7 +13,7 @@ class Photo extends Model
     protected $fillable = [
         'titre',
         'url',
-        'note',
+        'note', // ancienne colonne (peut être ignorée ou supprimée plus tard)
         'album_id',
         'user_id',
     ];
@@ -28,5 +28,17 @@ class Photo extends Model
 
     public function user() {
         return $this->belongsTo(User::class,"user_id");
+    }
+
+    // NOUVELLE RELATION : une photo a plusieurs notes
+    public function notes()
+    {
+        return $this->hasMany(Note::class, 'photo_id');
+    }
+
+    // HELPER : calculer la moyenne des notes
+    public function noteMoyenne()
+    {
+        return $this->notes()->avg('note') ?? 0;
     }
 }

@@ -35,8 +35,24 @@
                 <img src="{{ $photo->url }}" alt="{{ $photo->titre }}">
                 <div class="photo-info">
                     <p class="photo-title">{{ $photo->titre }}</p>
-                    <span class="photo-note">Note : {{ $photo->note }}</span>
+                    <span class="photo-note">
+                        Note moyenne : {{ number_format($photo->noteMoyenne(), 1) }}/5
+                        ({{ $photo->notes->count() }} avis)
+                    </span>
                     
+                    @auth
+                        <form method="POST" action="/noterPhoto/{{ $photo->id }}" style="margin-top:8px;">
+                            @csrf
+                            <label for="note-{{ $photo->id }}" style="font-size:0.9rem;">Votre note :</label>
+                            <select name="note" id="note-{{ $photo->id }}" required style="margin-left:4px;">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                            <button type="submit" class="btn btn-primary" style="padding:4px 8px; font-size:0.85rem;">Noter</button>
+                        </form>
+                    @endauth
+
                     @if(Auth::check() && $photo->user_id === Auth::id())
                         <div class="photo-actions">
                             <form method="POST" action="/deletePhoto/{{ $photo->id }}">

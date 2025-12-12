@@ -8,12 +8,14 @@
             
             <div class="form-group">
                 <label for="email">Email :</label>
-                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="votre@email.com">
+                @error('email') <span style="color:red; font-size:0.9rem;">{{ $message }}</span> @enderror
             </div>
             
             <div class="form-group">
                 <label for="password">Mot de passe :</label>
                 <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+                @error('password') <span style="color:red; font-size:0.9rem;">{{ $message }}</span> @enderror
             </div>
             
             <div class="form-group">
