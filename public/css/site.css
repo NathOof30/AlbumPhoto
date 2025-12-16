@@ -330,6 +330,12 @@
     width: 100%;
 }
 
+.remember input{
+    display: inline;
+    width: auto;
+    margin-left: 10px;
+}
+
 .form-actions {
     display: flex;
     gap: var(--spacing-md);
