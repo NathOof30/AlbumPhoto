@@ -22,17 +22,20 @@
             @endforeach
         </ul>
         <h2>Mes Photos</h2>
-        <ul class="photos-list">
+        <div class="galery">
             @foreach ($photos as $photo)
-                <li class="photo-item">
+                <div class="item">
                     <a href="/album/{{ $photo->album_id }}">
+                        <img src="{{ $photo->url }}" alt="{{ $photo->titre }}">
                         <h3>{{ $photo->titre }}</h3>
-                        <div class="photo-meta">
-                            <span>Note moyenne : {{ number_format($photo->noteMoyenne(), 1) }}/5 ({{ $photo->notes->count() }} avis)</span>
-                        </div>
+                        <p>
+                            Album : {{ $photo->album_id }} • 
+                            Note moyenne : {{ number_format($photo->noteMoyenne(), 1) }}/5
+                            ({{ $photo->notes->count() }} avis)
+                        </p>
                     </a>
-                </li>
+                </div>
             @endforeach
-        </ul>
+        </div>
     </div>
 @endsection
