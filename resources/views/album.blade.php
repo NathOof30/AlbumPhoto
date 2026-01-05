@@ -32,6 +32,13 @@
     <div class="photo-grid">
         @foreach ($photos as $photo)
             <div class="photo-card">
+                @if(Auth::check() && $photo->user_id === Auth::id())
+                    <form method="POST" action="/deletePhoto/{{ $photo->id }}" class="delete-photo-form">
+                        @csrf
+                        <button type="submit" class="delete-btn" title="Supprimer cette photo">×</button>
+                    </form>
+                @endif
+
                 <img src="{{ $photo->url }}" alt="{{ $photo->titre }}">
                 <div class="photo-info">
                     <p class="photo-title">{{ $photo->titre }}</p>
@@ -52,15 +59,6 @@
                             <button type="submit" class="btn btn-primary" style="padding:4px 8px; font-size:0.85rem;">Noter</button>
                         </form>
                     @endauth
-
-                    @if(Auth::check() && $photo->user_id === Auth::id())
-                        <div class="photo-actions">
-                            <form method="POST" action="/deletePhoto/{{ $photo->id }}">
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                            </form>
-                        </div>
-                    @endif
                 </div>
             </div>
         @endforeach

@@ -213,10 +213,20 @@
 .photo-card {
     background-color: var(--color-bg-alt);
     border-radius: var(--radius-lg);
-    overflow: hidden;
+    overflow: visible; /* Change de hidden à visible */
     box-shadow: var(--shadow-md);
     transition: all var(--transition-base);
     border: 1px solid var(--color-border-light);
+    position: relative; /* Ajout */
+}
+
+.photo-card .delete-photo-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+    padding: 0;
+    z-index: 2;
 }
 
 .photo-card:hover {
@@ -257,6 +267,33 @@
     margin-top: var(--spacing-md);
     padding-top: var(--spacing-md);
     border-top: 1px solid var(--color-border-light);
+}
+
+.photo-card .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--color-danger);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.photo-card .delete-btn:hover {
+    background-color: #dc2626;
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
 }
 
 /* les photos */
