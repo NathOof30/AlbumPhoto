@@ -35,12 +35,27 @@
     <div class="galery">
         @foreach ($photos as $photo)
             <div class="item">
-                <img 
-                    src="{{ $photo->url }}" 
-                    alt="{{ $photo->titre }}" 
-                    class="preview"
-                    data-full-src="{{ $photo->url }}"
-                >
+                <div class="image-container">
+                    @if($photo->url)
+                        <img 
+                            src="{{ $photo->url }}" 
+                            alt="{{ $photo->titre }}" 
+                            class="preview"
+                            data-full-src="{{ $photo->url }}"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+                        >
+                        <div class="image-placeholder" style="display:none;">
+                            <i class='bx bx-image-alt'></i>
+                            <span>Image indisponible</span>
+                        </div>
+                    @else
+                        <div class="image-placeholder">
+                            <i class='bx bx-image-alt'></i>
+                            <span>Image indisponible</span>
+                        </div>
+                    @endif
+                </div>
+                
                 <h3>{{ $photo->titre }}</h3>
                 <div class="info-photo">
                     <a href="album/{{ $photo->album_id }}"><p>Album : {{ $photo->album_id }}</p></a>

@@ -29,39 +29,57 @@
         </form>
     </div>
 
-    <div class="photo-grid">
+    <div class="galery">
         @foreach ($photos as $photo)
-            <div class="photo-card">
+            <div class="item">
                 @if(Auth::check() && $photo->user_id === Auth::id())
-                    <form method="POST" action="/deletePhoto/{{ $photo->id }}" class="delete-photo-form">
+                    <form method="POST" action="/deletePhoto/{{ $photo->id }}" style="background-color:transparent; position: absolute; top: 12px; right: 12px; margin: 0; z-index: 10; box-shadow : none;">
                         @csrf
                         <button type="submit" class="delete-btn" title="Supprimer cette photo">×</button>
                     </form>
                 @endif
 
-                <img src="{{ $photo->url }}" alt="{{ $photo->titre }}">
-                <div class="photo-info">
-                    <p class="photo-title">{{ $photo->titre }}</p>
-                    <span class="photo-note">
+                <img 
+                    src="{{ $photo->url }}" 
+                    alt="{{ $photo->titre }}"
+                    class="preview"
+                    data-full-src="{{ $photo->url }}"
+                >
+                
+                <h3>{{ $photo->titre }}</h3>
+                
+                <div class="info-photo">
+                    <span>Album : {{ $album->titre }}</span>
+                    <span>{{ number_format($photo->noteMoyenne(), 1) }}/5 <i class='bx bxs-star'></i></span>
+                </div>
+
+                <div class="photo-actions">
+                    <span class="note-display">
                         Note moyenne : {{ number_format($photo->noteMoyenne(), 1) }}/5
                         ({{ $photo->notes->count() }} avis)
                     </span>
                     
                     @auth
-                        <form method="POST" action="/noterPhoto/{{ $photo->id }}" style="margin-top:8px;">
+                        <form method="POST" action="/noterPhoto/{{ $photo->id }}" class="note-form">
                             @csrf
-                            <label for="note-{{ $photo->id }}" style="font-size:0.9rem;">Votre note :</label>
-                            <select name="note" id="note-{{ $photo->id }}" required style="margin-left:4px;">
+                            <label for="note-{{ $photo->id }}">Votre note :</label>
+                            <select name="note" id="note-{{ $photo->id }}" required>
                                 @for($i = 1; $i <= 5; $i++)
                                     <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
-                            <button type="submit" class="btn btn-primary" style="padding:4px 8px; font-size:0.85rem;">Noter</button>
+                            <button type="submit" class="btn btn-primary">Noter</button>
                         </form>
                     @endauth
                 </div>
             </div>
         @endforeach
+    </div>
+
+    <div id="zoomOverlay" class="overlay">
+        <span class="close-btn">×</span>
+        <img id="overImage" src="" alt="Image en grand">
+        <p id="overCaption"></p>
     </div>
     
     @if($photos->isEmpty())
@@ -69,4 +87,6 @@
             <p>Aucune photo dans cet album.</p>
         </div>
     @endif
+    
+    <script src="{{ asset('zoom-photo.js') }}" defer></script>
 @endsection
