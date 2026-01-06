@@ -569,10 +569,6 @@ select {
     transition: transform var(--transition-base);
 }
 
-.photo-album-grid a.full-link:hover {
-    transform: scale(1.02);
-}
-
 .photo-slot {
     background: linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 100%);
     padding: 18px;
@@ -722,10 +718,6 @@ select {
     grid-area: img;
     cursor: pointer;
     transition: transform var(--transition-base);
-}
-
-.item > img:hover {
-    transform: scale(1.02);
 }
 
 /* Conteneur d'image avec ratio fixe */
