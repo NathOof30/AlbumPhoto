@@ -9,12 +9,10 @@
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <!-- npm run dev ou npm run build  -->
 </head>
 
 <body>
     <div class="header">
-        <!-- <img src="{{ Vite::asset('resources/images/testimage.jpg') }}"> || c'est pour vite.js-->
         <header><a href="/">Album Photo</a></header>
         <nav id="main-nav">
             <a href="/">Accueil</a>
@@ -47,8 +45,6 @@
             @endauth
         </nav>
     </div>
-
-
 
     <main class="container">
         <div class="content">

@@ -28,7 +28,7 @@
             <div class="form-actions">
                 <input type="submit" value="Se connecter" class="btn btn-primary">
             </div>
-            
+
             <p class="text-center text-muted">
                 Pas encore de compte ? <a href="{{route("register")}}">Inscrivez-vous</a>
             </p>
